@@ -12,6 +12,7 @@ const profile = {
     "days-per-week": 5,
     "hours-per-day": 5,
     "vacation-per-year": 4,
+    "valuer-hour": 75,
 }
 
 // array - agrupando dados
@@ -21,20 +22,58 @@ const jobs = [
     name: "Pizza Guloso",
     "daily-hours": 2,
     "total-hours": 60,
-    created_at: Date.now()
+    created_at: Date.now(),
     },
     {
     id: 2,
     name: "OneTwo Project",
     "daily-hours": 3,
     "total-hours": 47,
-    created_at: Date.now()   
+    created_at: Date.now(),
     }
 ]
 
-// request, reponse
 
-routes.get('/', (req,res) => res.render(views + "index", { jobs }))
+function remainingDays(job) {
+        // calculo de tempo restante
+        const remainingDays = (job["total-hours"] / job["daily-hours"]).toFixed()
+
+        const createdDate = new Date(job.created_at)
+        const dueDay = createdDate.getDate() + Number(remainingDays)
+        const dueDataInMs = createdDate.setDate(dueDay)
+    
+        const timeDiffnMs = dueDataInMs - Date.now()
+        
+        // Tranformar milli em dias
+        const dayInMs = 1000 * 60 * 60 * 24 
+        const dayDiff = Math.floor(timeDiffnMs / dayInMs)
+
+        // restam x dias
+        return dayDiff
+}
+
+// request, reponse
+routes.get('/', (req,res) => {
+    
+    const updateJobs = jobs.map((job) => {
+    // ajustes no job
+    const remaining = remainingDays(job)
+    const status = remaining <= 0 ? 'done' : 'progress'
+
+    return {
+        // ... - espalhamento
+        ...job,
+        remaining,
+        status,
+        budget: profile["valuer-hour"] * job["total-hours"],
+    }
+    })
+    
+    return res.render(views + "index", { jobs: updateJobs })
+})
+
+
+
 routes.get('/job', (req,res) => res.render(views + "job"))
 routes.post('/job', (req,res) => {
     //req.body = {name: 'Wander Alisson Rodrigues Souza','daily-hours': '2','total-hours': '2'}
