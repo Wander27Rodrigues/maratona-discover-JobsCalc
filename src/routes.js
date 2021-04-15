@@ -5,7 +5,7 @@ const routes = express.Router();
 
 const views = __dirname + "/views/"
 
-const Profile = {
+const profile = {
   data: {
     name: "wander",
     avatar: "http://github.com/wander27Rodrigues.png",
@@ -58,7 +58,7 @@ const job = {
                     ...job,
                     remaining,
                     status,
-                    budget: Profile.data["valuer-hour"] * job["total-hours"],
+                    budget: profile["valuer-hour"] * job["total-hours"]
                 }
                 })
                 
