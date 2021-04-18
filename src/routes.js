@@ -5,7 +5,7 @@ const routes = express.Router();
 
 const views = __dirname + "/views/"
 
-const profile = {
+const Profile = {
   data: {
     name: "wander",
     avatar: "http://github.com/wander27Rodrigues.png",
@@ -17,40 +17,44 @@ const profile = {
   },
 
   controllers: {
-      index(req, res){
+      index(req, res) {
           return res.render(views + "profile", { profile: Profile.data })
       },
 
-      update(){
-
+      update(req, res){
+        // re.body para pegar os dados
+        // definir quantas semanas tem um ano
+        // remover as semanas de ferias
+        // total de horas trabalhadas no mes
       }
 
   }
 }
 
-const job = {
+const Job = {
     data: [
     // array - agrupando dados  
     {
-    id: 1,
-    name: "Pizza Guloso",
-    "daily-hours": 2,
-    "total-hours": 1,
-    created_at: Date.now(),
+        id: 1,
+        name: "Pizza Guloso",
+        "daily-hours": 2,
+        "total-hours": 1,
+        created_at: Date.now(),
     },
     {
-    id: 2,
-    name: "OneTwo Project",
-    "daily-hours": 3,
-    "total-hours": 47,
-    created_at: Date.now(),
+        id: 2,
+        name: "OneTwo Project",
+        "daily-hours": 3,
+        "total-hours": 47,
+        created_at: Date.now(),
     }
 ],
+
     controllers: {
         index(req,res) {    
-                const updateJobs = job.data.map((job) => {
+                const updateJobs = Job.data.map((job) => {
                 // ajustes no job
-                const remaining = job.services.remainingDays(job)
+                const remaining = Job.services.remainingDays(job)
                 const status = remaining <= 0 ? 'done' : 'progress'
             
                 return {
@@ -58,7 +62,7 @@ const job = {
                     ...job,
                     remaining,
                     status,
-                    budget: profile["valuer-hour"] * job["total-hours"]
+                    budget: Profile.data["valuer-hour"] * job["total-hours"]
                 }
                 })
                 
@@ -73,9 +77,9 @@ const job = {
                  //req.body = {name: 'Wander Alisson Rodrigues Souza','daily-hours': '2','total-hours': '2'}
     
                 // logica and/Or
-                const lastId = job.data[job.data.length - 1]?.id || 1;
+                const lastId = Job.data[Job.data.length - 1]?.id || 1;
 
-                job.data.push({
+                Job.data.push({
                 id: lastId + 1,
                 name: req.body.name,
                 "daily-hours": req.body["daily-hours"],
@@ -87,6 +91,7 @@ const job = {
 
             }
         },
+
         services: {
             remainingDays(job) {
                 // calculo de tempo restante
@@ -106,16 +111,16 @@ const job = {
                 return dayDiff
         }
         }
-
     }
 
 
 // request, reponse
-routes.get('/', job.controllers.index)
-routes.get('/job', job.controllers.create)
-routes.post('/job', job.controllers.save)
+routes.get('/', Job.controllers.index)
+routes.get('/job', Job.controllers.create)
+routes.post('/job', Job.controllers.save)
 routes.get('/job/edit', (req,res) => res.render(views + "job-edit"))
 routes.get('/profile', Profile.controllers.index)
+routes.post('/profile', Profile.controllers.update)
 
 
     
