@@ -13,7 +13,7 @@ const Profile = {
     "days-per-week": 5,
     "hours-per-day": 5,
     "vacation-per-year": 4,
-    "valuer-hour": 75,
+    "value-hour": 75,
   },
 
   controllers: {
@@ -23,9 +23,31 @@ const Profile = {
 
       update(req, res){
         // re.body para pegar os dados
-        // definir quantas semanas tem um ano
-        // remover as semanas de ferias
-        // total de horas trabalhadas no mes
+        const data = req.body
+
+        // definir quantas semanas tem um ano: 52
+        const weekPerYear = 52
+
+        // remover as semanas de ferias do ano, para pegar quantas semanas tem em 1 mês
+        const weekPerMonth = (weekPerYear - data ["vacation-per-year"])/ 12 
+
+        // total de horas trabalhadas na semana
+        const weekTotalHours = data ["hours-per-day"] * data ["days-per-week"]
+
+        // horas trabalhadas no mês
+        const monthlyTotalHours = weekTotalHours * weekPerMonth
+        
+
+        // qual será o valor da minha hora
+        const valueHour = data["monthly-budget"] / monthlyTotalHours
+        
+        Profile.data = {
+            ...Profile.data,
+            ...req.body,
+            "value-hour":valueHour
+        }
+
+        return res.redirect('/profile')
       }
 
   }
