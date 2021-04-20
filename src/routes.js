@@ -61,6 +61,7 @@ const Job = {
         "daily-hours": 2,
         "total-hours": 1,
         created_at: Date.now(),
+        budget: 4500,   
     },
     {
         id: 2,
@@ -68,6 +69,7 @@ const Job = {
         "daily-hours": 3,
         "total-hours": 47,
         created_at: Date.now(),
+        budget: 4500,
     }
 ],
 
@@ -116,7 +118,7 @@ const Job = {
 
                 const jobId = req.params.id
 
-                const job = Job.data.find(job => jobId === jobId)
+                const job = Job.data.find(job => Number(job.id) === jobId)
 
                 // caso não ache o job 
                 if (!job) {
