@@ -85,8 +85,8 @@ const Job = {
                     ...job,
                     remaining,
                     status,
-                    budget: Profile.data["valuer-hour"] * job["total-hours"]
-                }
+                    budget: job.services.calculateBudget(job, Profile.data["value-hour"])
+                }    
                 })
                 
                 return res.render(views + "index", { jobs: updateJobs })
@@ -145,8 +145,10 @@ const Job = {
         
                 // restam x dias
                 return dayDiff
+        },
+            calculateBudget: (job, valueHour) => valueHour * job["total-hours"]        
         }
-        }
+        
     }
 
 
