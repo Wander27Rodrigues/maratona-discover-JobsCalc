@@ -61,7 +61,7 @@ const Job = {
         "daily-hours": 2,
         "total-hours": 1,
         created_at: Date.now(),
-        budget: 4500,   
+        
     },
     {
         id: 2,
@@ -69,7 +69,7 @@ const Job = {
         "daily-hours": 3,
         "total-hours": 47,
         created_at: Date.now(),
-        budget: 4500,
+        
     }
 ],
 
@@ -124,6 +124,9 @@ const Job = {
                 if (!job) {
                     return res.send('Job not found')
                 }
+
+                job.budget =  Job.services.calculateBudget(job, Profile.data["value-hour"])
+
                 return res.render(views + "job-edit", { job })
             }
         },
