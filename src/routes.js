@@ -161,7 +161,7 @@ routes.get('/job', Job.controllers.create)
 routes.post('/job', Job.controllers.save)
 routes.get('/job/:id', Job.controllers.show)
 routes.get('/profile', Profile.controllers.index)
-routes.post('/profile', Profile.controllers.update)
+
 
 
     
