@@ -25,24 +25,24 @@
   </head>
   <body id="page-profile">
     <!-- reaproveitando o header com o include -->
-    <%- include('parts/page-header', {title: 'Meu Perfil',}) %>     
+    <%- include('parts/page-header', { title: 'Meu Perfil'}) %>
 
     <div class="container animate-up delay-2">
       <aside class="card">
-        <img src="<%= profile.avatar %> " alt="<%= profile.name %> ">
+        <img src="<%= profile.avatar %>" alt="<%= profile.name %> ">
         <h2><%= profile.name %> </h2>
         <p>
           O valor da sua hora é <br/>
-          <strong>R$ <%= profile["value-hour"].toFixed(2).replace(".", ",") %>  </strong>
+          <strong>R$ <%= profile["value-hour"].toFixed(2).replace(".", ",") %> </strong>
         </p>
         <button class="button green" form="form-profile" type="submit">Salvar dados</button>
       </aside>
       <main>
 
         <form 
-        id="form-profile" 
-        method="post" 
-        action="/profile">
+          id="form-profile"
+          method="post"
+          action="/profile">
           <fieldset>
             <legend>Dados do perfil</legend>
             <div class="separator light"></div>
@@ -51,10 +51,10 @@
               <div class="input-wrapper">
                 <label for="name">Nome</label>
                 <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                value="<%= profile.name %> " />
+                  type="text"
+                  id="name"
+                  name="name"
+                  value="<%= profile.name %>" />
               </div>
 
               <div class="input-wrapper">
@@ -63,8 +63,8 @@
                 placeholder="https://"
                 type="url" 
                 id="avatar" 
-                name="avatar" 
-                value="<%= profile.avatar %> " />
+                name="avatar"
+                value="<%= profile.avatar %>" />
               </div>
             </div>
           </fieldset>
@@ -82,7 +82,7 @@
                   id="monthly-budget" 
                   name="monthly-budget" 
                   placeholder="R$"
-                  value="<%= profile["monthly-budget"] %> " />
+                  value="<%= profile["monthly-budget"] %>"/>
               </div>
 
               <div class="input-wrapper">
@@ -91,7 +91,7 @@
                 <input 
                   type="number"
                   id="hours-per-day" 
-                  name="hours-per-day" 
+                  name="hours-per-day"
                   value="<%= profile["hours-per-day"] %>"/>
               </div>
             </div>
@@ -103,9 +103,8 @@
                 <input
                   type="number"
                   id="days-per-week" 
-                  name="days-per-week" 
-                  value="<%= profile["days-per-week"] %>"
-                  />
+                  name="days-per-week"
+                  value="<%= profile["days-per-week"] %>" />
               </div>
 
               <div class="input-wrapper">
@@ -114,13 +113,8 @@
                 <input 
                   type="number" 
                   id="vacation-per-year" 
-                  name="vacation-per-year" 
-                  
-                  value="<%= profile["vacation-per-year"] %>"
-                  />
-                  <!-- value="profile["vacation-per-year"] %>" forma
-                  que o javascriptler value com -
-                  -->
+                  name="vacation-per-year"
+                  value="<%= profile["vacation-per-year"] %>" />
               </div>
             </div>
           </fieldset>
